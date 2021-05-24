@@ -6,24 +6,23 @@ import { getAllSongsApi } from "../api/songApi";
 function* getAllSongs(action) {
   try {
     const response = yield getAllSongsApi(action);
-    const { status, results = {} } = response || {};
     console.log(response);
-    //   if (status !== "success") {
-    //     yield put({
-    //       type: types.GET_ALL_ALBUMS_FAILURE,
-    //       error: response,
-    //     });
-    //   } else {
-    //     yield put({
-    //       type: types.GET_ALL_ALBUMS_SUCCESS,
-    //       data: results,
-    //     });
-    //   }
+    if (!response) {
+      yield put({
+        type: types.GET_ALL_SONGS_FAILURE,
+        error: "Songs Fetching Failed...",
+      });
+    } else {
+      yield put({
+        type: types.GET_ALL_SONGS_SUCCESS,
+        data: response,
+      });
+    }
   } catch (error) {
-    //   yield put({
-    //     type: types.GET_ALL_ALBUMS_FAILURE,
-    //     error,
-    //   });
+    yield put({
+      type: types.GET_ALL_SONGS_FAILURE,
+      error,
+    });
   }
 }
 

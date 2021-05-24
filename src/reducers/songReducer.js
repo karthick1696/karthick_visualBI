@@ -16,7 +16,7 @@ export default function songReducer(state = {}, action) {
       return {
         ...state,
         loading: false,
-        songList: action.data || [],
+        songList: (action.data || []).slice(0, 100),
       };
 
     case types.GET_ALL_SONGS_FAILURE:

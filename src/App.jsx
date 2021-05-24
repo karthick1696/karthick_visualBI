@@ -10,7 +10,7 @@ function App() {
         <Route
           exact
           path="/music"
-          comp={Music} />
+          component={Music} />
         <Redirect
           from="*"
           to="/music" />

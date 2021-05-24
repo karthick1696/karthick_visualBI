@@ -6,24 +6,23 @@ import { getAllAlbumsApi } from "../api/playlistApi";
 function* getAllAlbums(action) {
   try {
     const response = yield getAllAlbumsApi(action);
-    const { status, results = {} } = response || {};
     console.log(response);
-    //   if (status !== "success") {
-    //     yield put({
-    //       type: types.GET_ALL_ALBUMS_FAILURE,
-    //       error: response,
-    //     });
-    //   } else {
-    //     yield put({
-    //       type: types.GET_ALL_ALBUMS_SUCCESS,
-    //       data: results,
-    //     });
-    //   }
+    if (!response) {
+      yield put({
+        type: types.GET_ALL_ALBUMS_FAILURE,
+        error: "Albums Fetching Failed...",
+      });
+    } else {
+      yield put({
+        type: types.GET_ALL_ALBUMS_SUCCESS,
+        data: response,
+      });
+    }
   } catch (error) {
-    //   yield put({
-    //     type: types.GET_ALL_ALBUMS_FAILURE,
-    //     error,
-    //   });
+    yield put({
+      type: types.GET_ALL_ALBUMS_FAILURE,
+      error,
+    });
   }
 }
 

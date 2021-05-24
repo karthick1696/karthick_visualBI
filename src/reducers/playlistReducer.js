@@ -16,7 +16,7 @@ export default function playlistReducer(state = {}, action) {
       return {
         ...state,
         loading: false,
-        albumList: action.data || [],
+        albumList: (action.data || []).slice(0, 50),
       };
 
     case types.GET_ALL_ALBUMS_FAILURE:

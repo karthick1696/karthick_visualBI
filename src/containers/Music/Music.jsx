@@ -1,17 +1,11 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect } from "react";
-
 import styles from "./Music.scss";
 
 export function Music({
-    actions
+    actions,
 }) {
-    useEffect(() => {
-        actions.getAllAlbums();
-        actions.getAllSongs();
-    }, []);
-
     return (
-        <div />
+        <div className={styles.container}>
+            Music
+        </div>
     );
 }
