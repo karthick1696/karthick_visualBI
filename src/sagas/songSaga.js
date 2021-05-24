@@ -5,17 +5,18 @@ import { getAllSongsApi } from "../api/songApi";
 
 function* getAllSongs(action) {
   try {
+    const { callback } = action.payload;
     const response = yield getAllSongsApi(action);
-    console.log(response);
     if (!response) {
       yield put({
         type: types.GET_ALL_SONGS_FAILURE,
-        error: "Songs Fetching Failed...",
       });
     } else {
+      const data = response.slice(0, 100);
+      callback && callback(data);
       yield put({
         type: types.GET_ALL_SONGS_SUCCESS,
-        data: response,
+        data,
       });
     }
   } catch (error) {

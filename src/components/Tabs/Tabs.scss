@@ -1,0 +1,32 @@
+@import "src/styles/variables";
+
+.tabs {
+  text-align: center;
+  span {
+    display: inline-block;
+    position: relative;
+    border: 1.5px solid $vb-orange-light;
+    padding: 1rem 2rem;
+    font-size: 1.4rem;
+    transition: all 0.3s ease;
+    &:first-child {
+      border-top-left-radius: 5px;
+      border-bottom-left-radius: 5px;
+    }
+    &:last-child {
+      border-top-right-radius: 5px;
+      border-bottom-right-radius: 5px;
+    }
+    &:not(:first-child) {
+      left: -1px;
+    }
+    &:hover {
+      cursor: pointer;
+    }
+    &.active {
+      border-color: transparent;
+      background: $orangeGradient;
+      color: $vb-white;
+    }
+  }
+}

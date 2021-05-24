@@ -1,5 +1,6 @@
-// import { toast } from "react-toastify";
+import { toast } from "react-toastify";
 import * as types from "../actionTypes/songActionTypes";
+import { setItem } from "../common/utils";
 
 export default function songReducer(state = {}, action) {
   const { type } = action;
@@ -9,17 +10,24 @@ export default function songReducer(state = {}, action) {
       return {
         ...state,
         loading: true,
-        songList: [],
       };
 
     case types.GET_ALL_SONGS_SUCCESS:
+      setItem("songList", action.data);
+
       return {
         ...state,
         loading: false,
-        songList: (action.data || []).slice(0, 100),
       };
 
     case types.GET_ALL_SONGS_FAILURE:
+      toast.error("Songs Fetching Failed...", {
+        position: "top-right",
+        autoClose: 3000,
+        closeOnClick: true,
+        pauseOnHover: false,
+      });
+
       return {
         ...state,
         loading: false,

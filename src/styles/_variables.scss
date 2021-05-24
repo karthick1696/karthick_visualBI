@@ -1,1 +1,11 @@
 // colors
+$vb-black: #000000;
+$vb-white: #ffffff;
+$vb-orange-light: #f98d36;
+$vb-orange-dark: #d23918;
+
+$orangeGradient: linear-gradient(
+  90deg,
+  $vb-orange-light 0%,
+  $vb-orange-dark 100%
+);

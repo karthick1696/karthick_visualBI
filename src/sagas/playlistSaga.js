@@ -5,17 +5,18 @@ import { getAllAlbumsApi } from "../api/playlistApi";
 
 function* getAllAlbums(action) {
   try {
+    const { callback } = action.payload;
     const response = yield getAllAlbumsApi(action);
-    console.log(response);
     if (!response) {
       yield put({
         type: types.GET_ALL_ALBUMS_FAILURE,
-        error: "Albums Fetching Failed...",
       });
     } else {
+      const data = response.slice(0, 25);
+      callback && callback(data);
       yield put({
         type: types.GET_ALL_ALBUMS_SUCCESS,
-        data: response,
+        data,
       });
     }
   } catch (error) {

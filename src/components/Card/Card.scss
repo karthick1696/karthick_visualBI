@@ -1,0 +1,25 @@
+@import "src/styles/variables";
+
+.song {
+  padding: 1rem;
+  margin: 1rem;
+  border: 1px solid $vb-orange-light;
+  border-radius: 3px;
+  box-shadow: 0 0 0.5rem rgba($vb-orange-light, 0.2);
+  &Details {
+    display: flex;
+    align-items: center;
+    .thumbnail {
+      border-radius: 50%;
+      height: 4rem;
+    }
+    .title {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-left: 1rem;
+      font-size: 1.4rem;
+      width: 60%;
+    }
+  }
+}
