@@ -1,0 +1,17 @@
+@import "styles";
+
+* {
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+}
+
+html {
+  font-size: 10px;
+}
+
+body {
+  font-size: 1.6rem;
+  margin: 0;
+  font-family: sans-serif;
+}

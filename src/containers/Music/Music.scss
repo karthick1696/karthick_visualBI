@@ -1,0 +1,83 @@
+@import "src/styles/variables";
+
+.container {
+  padding: 3rem;
+  min-width: 250px;
+  .logout {
+    margin: 0.5rem;
+    text-align: right;
+  }
+  .task {
+    width: 20%;
+    margin: 2rem auto;
+    &Header {
+      display: flex;
+      justify-content: space-between;
+      background-color: $sb-white-v2;
+      border: 1px solid $sb-white-v3;
+      .label {
+        padding: 1rem;
+        font-size: 1.2rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        span {
+          margin-left: 1rem;
+        }
+      }
+      .icon {
+        border: 1px solid transparent;
+        border-left-color: $sb-white-v3;
+        display: flex;
+        align-items: center;
+        padding: 0 0.5rem;
+        &:hover {
+          cursor: pointer;
+        }
+        svg {
+          font-size: 1.8rem;
+          vertical-align: middle;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1500px) {
+  .container {
+    .task {
+      width: 30%;
+    }
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .container {
+    .task {
+      width: 40%;
+    }
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .container {
+    .task {
+      width: 50%;
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .container {
+    .task {
+      width: 70%;
+    }
+  }
+}
+
+@media screen and (max-width: 475px) {
+  .container {
+    .task {
+      width: 100%;
+    }
+  }
+}

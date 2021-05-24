@@ -1,0 +1,16 @@
+@import "src/styles/variables";
+
+.container {
+  label {
+    font-size: 1.5rem;
+  }
+  input, select {
+    outline: none;
+    border: 1px solid $sb-white-v3;
+    border-radius: 3px;
+    margin: 0.5rem 0;
+    color: rgba($sb-black, 0.8);
+    background: $sb-white-v1;
+    padding: 0.5rem;
+  }
+}
