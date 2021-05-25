@@ -1,13 +1,15 @@
 import { useRef, useState, useEffect } from 'react';
 import { shuffle } from 'lodash';
+
 import EditIcon from '@material-ui/icons/Edit';
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 
 import Button from '../../../../components/Button';
-import Songs from '../../Songs';
-import styles from "./CreatePlaylist.scss";
 import Card from '../../../../components/Card';
+import Songs from '../../Songs';
 import { setItem } from '../../../../common/utils';
+
+import styles from "./CreatePlaylist.scss";
 
 export function CreatePlaylist({
     playlists,
@@ -33,6 +35,13 @@ export function CreatePlaylist({
         );
         inputRef.current.value = (selectedPlayList || {}).title
             || `Play List ${playlists.length + 1}`;
+
+        return () => {
+            actions.setPlaylist({
+                title: "",
+                songs: []
+            })
+        }
     }, []);
 
     const onEditName = e => {
@@ -60,6 +69,14 @@ export function CreatePlaylist({
         )
     }
 
+    const deleteSongFromPlaylist = playlistSong => {
+        const { songs: playlistSongs } = playlist;
+        actions.setPlaylist({
+            ...playlist,
+            songs: playlistSongs.filter(song => song.id !== playlistSong.id),
+        });
+    }
+
     const onShuffleSongs = () => {
         actions.setPlaylist({
             ...playlist,
@@ -68,17 +85,41 @@ export function CreatePlaylist({
     }
 
     const onSelectSave = () => {
-        const updatedPlayList = [
-            {
-                ...playlist,
-                createdOn: new Date(),
-                id: playlists.length + 1
-            },
-            ...playlists,
-        ]
-        setItem('playList', updatedPlayList);
-        setCreate(false);
-        setPlaylists(updatedPlayList);
+        if (!selectedPlayList) {
+            const updatedPlayList = [
+                {
+                    ...playlist,
+                    createdOn: new Date(),
+                    id: playlists.length + 1
+                },
+                ...playlists,
+            ]
+            setItem('playList', updatedPlayList);
+            setCreate(false);
+            setPlaylists(updatedPlayList);
+
+            return;
+        }
+
+        const indexToUpdate = playlists.findIndex(
+            list => list.id === playlist.id
+        );
+        const updatedPlayList = {
+            ...playlists[indexToUpdate],
+            ...playlist,
+            updatedOn: new Date(),
+        };
+        const updatedPlayLists = [...playlists];
+        updatedPlayLists.splice(indexToUpdate, 1, updatedPlayList);
+        const sortedPlayLists = updatedPlayLists.sort((a, b) => {
+            const comp1 = new Date(a.updatedOn || a.createdOn).getTime();
+            const comp2 = new Date(b.updatedOn || b.createdOn).getTime();
+
+            return comp2 - comp1;
+        })
+        setItem('playList', sortedPlayLists);
+        setSelectedPlayList(null);
+        setPlaylists(sortedPlayLists);
     }
 
     const onSelectCancel = () => {
@@ -142,7 +183,14 @@ export function CreatePlaylist({
                                     key={song.id}
                                     type="song"
                                     detail={song}
-                                    albums={albums} />
+                                    albums={albums}
+                                    playlistConfig={{
+                                        type: "edit",
+                                        onSelectIcon: deleteSongFromPlaylist,
+                                        classes: {
+                                            card: styles.card
+                                        }
+                                    }} />
                             ))}
                             {!playlist.songs.length
                                 ? (

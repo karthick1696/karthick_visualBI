@@ -1,6 +1,8 @@
 @import "src/styles/variables";
+@import "src/styles/helpers";
 
 .container {
+  position: relative;
   height: calc(100% - 10rem);
   overflow: auto;
 }

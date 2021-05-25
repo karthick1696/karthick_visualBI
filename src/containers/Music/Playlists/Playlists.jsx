@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import EditIcon from '@material-ui/icons/Edit';
 
-import { getItem } from "../../../common/utils";
-import Card from "../../../components/Card";
-
-import Button from "../../../components/Button";
-import styles from "./Playlists.scss";
 import CreatePlaylist from "./CreatePlaylist";
+import Button from "../../../components/Button";
+import Card from "../../../components/Card";
+import { getItem } from "../../../common/utils";
+
+import styles from "./Playlists.scss";
 
 export function Playlists(props) {
     const [playlists, setPlaylists] = useState([]);

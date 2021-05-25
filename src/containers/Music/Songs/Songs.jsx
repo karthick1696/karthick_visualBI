@@ -82,6 +82,12 @@ export function Songs(props) {
                         albums={albums}
                         playlistConfig={playlistConfig} />
                 ))}
+                {!songs.length
+                    ? (
+                        <div className={styles.noDataWrap}>
+                            No Songs Found!!
+                        </div>
+                    ) : null}
             </div>
         </>
     );

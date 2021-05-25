@@ -1,4 +1,5 @@
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 import { formatDate } from './../../common/utils';
 
@@ -15,8 +16,8 @@ export function Card({
         albums,
         playlistConfig: {
             type: playlistType,
-            onSelectIcon,
-            classes: playlistClasses
+            onSelectIcon = () => { },
+            classes: playlistClasses = {}
         } = {
             type: '',
             onSelectIcon: () => { },
@@ -41,11 +42,14 @@ export function Card({
                                 <strong>Album:</strong> {albums[detail.albumId]}
                             </div>
                         </div>
+                        {children}
                     </>
                 );
 
             case "playlist":
-                const createdOn = formatDate(detail.createdOn);
+                const date = formatDate(
+                    detail.updatedOn ||detail.createdOn
+                );
 
                 return (
                     <>
@@ -53,8 +57,10 @@ export function Card({
                             <div title={detail.title}>
                                 {detail.title}
                             </div>
-                            <div title={createdOn}>
-                                <strong>Created on:</strong> {createdOn}
+                            <div title={date}>
+                                <strong>
+                                    {detail.updatedOn ? 'Updated on' : 'Created on:'}
+                                </strong> {date}
                             </div>
                         </div>
                         {children}
@@ -80,6 +86,13 @@ export function Card({
             case 'add':
                 return (
                     <AddCircleOutlineIcon
+                        titleAccess="Add"
+                        onClick={() => onSelectIcon(detail)} />
+                );
+            case 'edit':
+                return (
+                    <DeleteIcon
+                        titleAccess="Delete"
                         onClick={() => onSelectIcon(detail)} />
                 );
             default:
