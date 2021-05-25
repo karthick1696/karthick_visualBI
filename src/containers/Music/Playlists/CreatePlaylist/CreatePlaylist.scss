@@ -1,4 +1,5 @@
 @import "src/styles/variables";
+@import "src/styles/helpers";
 
 svg {
   cursor: pointer;
@@ -44,6 +45,14 @@ svg {
 
 .btnWrap {
   text-align: right;
+  &Footer {
+    button:last-child {
+      text-align: center;
+      background: $orangeGradient;
+      color: $vb-white;
+      border-color: transparent;
+    } 
+  }
 }
 
 .card {
@@ -56,7 +65,19 @@ svg {
 }
 
 .container {
+  height: 100%;
   & > * {
     margin-top: 1rem;
+  }
+}
+
+.songList {
+  &Add {
+    height: calc(100% - 15rem);
+  }
+  &View {
+    height: calc(100% - 20rem);
+    overflow: auto;
+    position: relative;
   }
 }

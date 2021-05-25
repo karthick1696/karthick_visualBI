@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { debounce, differenceWith, isEqual } from "lodash";
+import { debounce, differenceWith } from "lodash";
 
 import { getItem } from "../../../common/utils";
 import Card from "../../../components/Card";
@@ -11,11 +11,12 @@ export function Songs(props) {
     const {
         actions,
         songs,
+        classes = {},
         albums,
         playlist,
         playlistConfig = {
-            forPlaylist: false,
-            onSelectAdd: () => { },
+            type: '',
+            onSelectIcon: () => { },
             classes: {}
         }
     } = props;
@@ -39,8 +40,12 @@ export function Songs(props) {
     const getAppropriateSongList = () => {
         const songList = getItem("songList");
 
-        if (playlistConfig.forPlaylist) {
-            return differenceWith(songList || [], playlist.songs, isEqual);
+        if (playlistConfig.type) {
+            return differenceWith(
+                songList || [],
+                playlist.songs,
+                (a, b) => a.id === b.id
+            );
         }
 
         return songList;
@@ -68,7 +73,7 @@ export function Songs(props) {
                     placeholder: "Search for songs...",
                     onChange: onSearch
                 }} />
-            <div className={styles.container}>
+            <div className={`${styles.container} ${classes.container}`}>
                 {songs.map(song => (
                     <Card
                         key={song.id}

@@ -1,4 +1,7 @@
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+
+import { formatDate } from './../../common/utils';
+
 import styles from "./Card.scss";
 
 export function Card({
@@ -11,9 +14,13 @@ export function Card({
         classes = {},
         albums,
         playlistConfig: {
-            forPlaylist,
-            onSelectAdd,
+            type: playlistType,
+            onSelectIcon,
             classes: playlistClasses
+        } = {
+            type: '',
+            onSelectIcon: () => { },
+            classes: {}
         }
     } = rest;
 
@@ -26,14 +33,31 @@ export function Card({
                             className={styles.thumbnail}
                             src={detail.thumbnailUrl}
                             alt="thumbnail" />
-                        <div
-                            title={detail.title}
-                            className={styles.title}>
-                            <div>{detail.title}</div>
-                            <div>
+                        <div className={styles.title}>
+                            <div title={detail.title}>
+                                {detail.title}
+                            </div>
+                            <div title={albums[detail.albumId]}>
                                 <strong>Album:</strong> {albums[detail.albumId]}
                             </div>
                         </div>
+                    </>
+                );
+
+            case "playlist":
+                const createdOn = formatDate(detail.createdOn);
+
+                return (
+                    <>
+                        <div className={styles.title}>
+                            <div title={detail.title}>
+                                {detail.title}
+                            </div>
+                            <div title={createdOn}>
+                                <strong>Created on:</strong> {createdOn}
+                            </div>
+                        </div>
+                        {children}
                     </>
                 );
 
@@ -51,19 +75,28 @@ export function Card({
         }
     }
 
+    const getIcons = () => {
+        switch (playlistType) {
+            case 'add':
+                return (
+                    <AddCircleOutlineIcon
+                        onClick={() => onSelectIcon(detail)} />
+                );
+            default:
+                return null;
+        }
+    }
+
 
     return (
         <div className={`
             ${styles.card}
-            ${!forPlaylist ? classes.card : playlistClasses.card}
+            ${!type ? classes.card : playlistClasses.card}
         `}>
             <div className={`${styles.cardDetails} ${classes.detail}`}>
                 {getDetailView()}
             </div>
-            {forPlaylist ? (
-                <AddCircleOutlineIcon
-                    onClick={() => onSelectAdd(detail)} />
-             ) : null}
+            {getIcons()}
         </div>
     )
 }

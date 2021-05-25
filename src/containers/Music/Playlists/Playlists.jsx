@@ -11,6 +11,7 @@ import CreatePlaylist from "./CreatePlaylist";
 export function Playlists(props) {
     const [playlists, setPlaylists] = useState([]);
     const [isCreate, setCreate] = useState(false);
+    const [selectedPlayList, setSelectedPlayList] = useState(null);
 
     useEffect(() => {
         setPlaylists(
@@ -18,10 +19,16 @@ export function Playlists(props) {
         );
     }, []);
 
-    if (isCreate) {
+    const onEditPlayList = playlist => setSelectedPlayList(playlist);
+
+    if (isCreate || selectedPlayList) {
         return (
             <CreatePlaylist
                 playlists={playlists}
+                setPlaylists={setPlaylists}
+                setCreate={setCreate}
+                setSelectedPlayList={setSelectedPlayList}
+                selectedPlayList={selectedPlayList}
                 {...props} />
         )
     }
@@ -32,16 +39,20 @@ export function Playlists(props) {
                 {playlists.map(playlist => (
                     <Card
                         key={playlist.id}
+                        type="playlist"
                         classes={{
                             detail: styles.cardDetail
                         }}
                         detail={playlist}>
-                        <EditIcon className={styles.edit} />
+                        <EditIcon
+                            onClick={() => onEditPlayList(playlist)}
+                            titleAccess="Edit"
+                            className={styles.edit} />
                     </Card>
                 ))}
                 {!playlists.length
                     ? (
-                        <div className={styles.noData}>
+                        <div className={styles.noDataWrap}>
                             No Playlist Found, Create One
                         </div>
                     ) : null}
