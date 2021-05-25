@@ -59,7 +59,7 @@ export function Card({
                             </div>
                             <div title={date}>
                                 <strong>
-                                    {detail.updatedOn ? 'Updated on' : 'Created on:'}
+                                    {detail.updatedOn ? 'Updated on:' : 'Created on:'}
                                 </strong> {date}
                             </div>
                         </div>

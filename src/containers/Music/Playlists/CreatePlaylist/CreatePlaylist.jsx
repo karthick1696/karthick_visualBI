@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useRef, useState, useEffect } from 'react';
 import { shuffle } from 'lodash';
 
@@ -10,6 +11,7 @@ import Songs from '../../Songs';
 import { setItem } from '../../../../common/utils';
 
 import styles from "./CreatePlaylist.scss";
+import { SECONDARY, STORAGE } from '../../../../common/constants';
 
 export function CreatePlaylist({
     playlists,
@@ -94,7 +96,7 @@ export function CreatePlaylist({
                 },
                 ...playlists,
             ]
-            setItem('playList', updatedPlayList);
+            setItem(STORAGE.PLAY_LIST, updatedPlayList);
             setCreate(false);
             setPlaylists(updatedPlayList);
 
@@ -117,7 +119,7 @@ export function CreatePlaylist({
 
             return comp2 - comp1;
         })
-        setItem('playList', sortedPlayLists);
+        setItem(STORAGE.PLAY_LIST, sortedPlayLists);
         setSelectedPlayList(null);
         setPlaylists(sortedPlayLists);
     }
@@ -127,8 +129,8 @@ export function CreatePlaylist({
         setSelectedPlayList(null);
     }
 
-    return (
-        <div className={styles.container}>
+    const getHeaderSection = () => {
+        return (
             <div className={styles.titleBoxWrap}>
                 <div className={styles.titleBox}>
                     <EditIcon
@@ -150,6 +152,28 @@ export function CreatePlaylist({
                     ) : null
                 }
             </div>
+        );
+    }
+
+    const getFooterBtns = () => {
+        return (
+            <div className={`${styles.btnWrap} ${styles.btnWrapFooter}`}>
+                <Button
+                    onClick={onSelectCancel}
+                    color={SECONDARY}
+                    name="Cancel" />
+                <Button
+                    color={SECONDARY}
+                    name={selectedPlayList ? "Update" : "Save"}
+                    onClick={onSelectSave}
+                    disabled={!playlist.title} />
+            </div>
+        );
+    }
+
+    return (
+        <div className={styles.container}>
+            {getHeaderSection()}
             {
                 addSong ? (
                     <Songs
@@ -170,10 +194,10 @@ export function CreatePlaylist({
                             <Button
                                 disabled={!playlist.songs.length}
                                 onClick={onShuffleSongs}
-                                color="secondary"
+                                color={SECONDARY}
                                 name="Shuffle Play" />
                             <Button
-                                color="secondary"
+                                color={SECONDARY}
                                 name="Add Song"
                                 onClick={setAddSong.bind(this, true)} />
                         </div>
@@ -199,17 +223,7 @@ export function CreatePlaylist({
                                     </div>
                                 ) : null}
                         </div>
-                        <div className={`${styles.btnWrap} ${styles.btnWrapFooter}`}>
-                            <Button
-                                onClick={onSelectCancel}
-                                color="secondary"
-                                name="Cancel" />
-                            <Button
-                                color="secondary"
-                                name={selectedPlayList ? "Update" : "Save"}
-                                onClick={onSelectSave}
-                                disabled={!playlist.title} />
-                        </div>
+                        {getFooterBtns()}
                     </>
                 )
             }

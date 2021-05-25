@@ -35,10 +35,7 @@ export default function songReducer(state = {}, action) {
       };
 
     case types.GET_ALL_ALBUMS_REQUEST:
-      return {
-        ...state,
-        loading: true,
-      };
+      return state;
 
     case types.GET_ALL_ALBUMS_SUCCESS:
       return {
@@ -48,7 +45,6 @@ export default function songReducer(state = {}, action) {
 
           return acc;
         }, {}),
-        loading: false,
       };
 
     case types.GET_ALL_ALBUMS_FAILURE:
@@ -59,10 +55,7 @@ export default function songReducer(state = {}, action) {
         pauseOnHover: false,
       });
 
-      return {
-        ...state,
-        loading: false,
-      };
+      return state;
 
     case types.SET_SONGS:
       return {

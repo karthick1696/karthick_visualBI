@@ -7,6 +7,7 @@ import * as SongsActions from "../../../actions/songActions";
 const mapStateToProps = (state) => ({
   songs: state.Song.songs || [],
   albums: state.Song.albums || {},
+  loading: state.Song.loading,
   playlist: state.Playlist.playlist || {},
 });
 

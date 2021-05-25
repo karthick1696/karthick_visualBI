@@ -5,6 +5,7 @@ import CreatePlaylist from "./CreatePlaylist";
 import Button from "../../../components/Button";
 import Card from "../../../components/Card";
 import { getItem } from "../../../common/utils";
+import { STORAGE, PLAYLIST } from "../../../common/constants";
 
 import styles from "./Playlists.scss";
 
@@ -15,7 +16,7 @@ export function Playlists(props) {
 
     useEffect(() => {
         setPlaylists(
-            getItem('playList') || []
+            getItem(STORAGE.PLAY_LIST) || []
         );
     }, []);
 
@@ -39,7 +40,7 @@ export function Playlists(props) {
                 {playlists.map(playlist => (
                     <Card
                         key={playlist.id}
-                        type="playlist"
+                        type={PLAYLIST.TYPE}
                         classes={{
                             detail: styles.cardDetail
                         }}
@@ -60,7 +61,7 @@ export function Playlists(props) {
             <div className={styles.btnWrap}>
                 <Button
                     onClick={() => setCreate(true)}
-                    name="Create Playlist" />
+                    name={PLAYLIST.CREATE_PLAYLIST} />
             </div>
         </>
     );

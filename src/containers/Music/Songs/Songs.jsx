@@ -1,7 +1,9 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from "react";
-import { debounce, differenceWith } from "lodash";
+import { debounce, differenceWith, isEmpty } from "lodash";
 
 import { getItem } from "../../../common/utils";
+import { SONGS, STORAGE } from "../../../common/constants";
 import Card from "../../../components/Card";
 import Search from "../../../components/Search";
 
@@ -18,19 +20,20 @@ export function Songs(props) {
             type: '',
             onSelectIcon: () => { },
             classes: {}
-        }
+        },
+        loading
     } = props;
 
     useEffect(() => {
         const songList = getAppropriateSongList();
 
-        actions.getAllAlbums();
+        isEmpty(albums) && actions.getAllAlbums();
         if (songList) {
             actions.setSongs(songList);
 
             return;
         }
-        actions.getAlbumsWithSongs();
+        actions.getAllSongs();
 
         return () => {
             actions.setSongs([]);
@@ -38,7 +41,7 @@ export function Songs(props) {
     }, []);
 
     const getAppropriateSongList = () => {
-        const songList = getItem("songList");
+        const songList = getItem(STORAGE.SONG_LIST);
 
         if (playlistConfig.type) {
             return differenceWith(
@@ -70,7 +73,7 @@ export function Songs(props) {
         <>
             <Search
                 inputProps={{
-                    placeholder: "Search for songs...",
+                    placeholder: SONGS.SEARCH_PLACEHOLDER,
                     onChange: onSearch
                 }} />
             <div className={`${styles.container} ${classes.container}`}>
@@ -82,7 +85,7 @@ export function Songs(props) {
                         albums={albums}
                         playlistConfig={playlistConfig} />
                 ))}
-                {!songs.length
+                {(!songs.length && !loading)
                     ? (
                         <div className={styles.noDataWrap}>
                             No Songs Found!!
