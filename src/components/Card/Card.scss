@@ -1,6 +1,7 @@
 @import "src/styles/variables";
+@import "src/styles/helpers";
 
-.song {
+.card {
   padding: 1rem;
   margin: 1rem;
   border: 1px solid $vb-orange-light;
@@ -14,12 +15,17 @@
       height: 4rem;
     }
     .title {
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
       margin-left: 1rem;
-      font-size: 1.4rem;
       width: 60%;
+      & > * {
+        @extend .text-cutter;
+        &:last-child {
+          font-size: 1.2rem;
+        }
+      }
     }
+  }
+  svg {
+    cursor: pointer;
   }
 }

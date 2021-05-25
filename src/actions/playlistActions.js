@@ -1,12 +1,12 @@
 import * as types from "../actionTypes/playlistActionTypes";
 
-export const getAllAlbums = (payload = {}) => ({
-  type: types.GET_ALL_ALBUMS_REQUEST,
+export const setPlaylist = (payload = {}) => ({
+  type: types.SET_PLAYLIST,
   payload,
 });
 
 const actions = {
-  getAllAlbums,
+  setPlaylist,
 };
 
 export default actions;

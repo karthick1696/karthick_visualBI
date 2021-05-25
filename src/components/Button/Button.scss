@@ -1,0 +1,24 @@
+@import "src/styles/variables";
+
+button {
+    border: none;
+    outline: none;
+    background: $orangeGradient;
+    color: $vb-white;
+    padding: 1rem 2rem;
+    margin: 0.5rem;
+    border-radius: 2rem;
+    font-size: 1.3rem;
+    cursor: pointer;
+    &.secondary {
+        background: transparent;
+        border: 1px solid $vb-orange-dark;
+        color: $vb-black;
+        border-radius: 3px;
+        padding: 0.5rem 1rem;
+    }
+    &:disabled {
+        opacity: 0.5;
+        cursor: auto;
+    }
+}

@@ -1,11 +1,10 @@
 import { put, all, takeLatest } from "redux-saga/effects";
 
 import * as types from "../actionTypes/songActionTypes";
-import { getAllSongsApi } from "../api/songApi";
+import { getAllSongsApi, getAllAlbumsApi } from "../api/songApi";
 
 function* getAllSongs(action) {
   try {
-    const { callback } = action.payload;
     const response = yield getAllSongsApi(action);
     if (!response) {
       yield put({
@@ -13,7 +12,6 @@ function* getAllSongs(action) {
       });
     } else {
       const data = response.slice(0, 100);
-      callback && callback(data);
       yield put({
         type: types.GET_ALL_SONGS_SUCCESS,
         data,
@@ -27,6 +25,30 @@ function* getAllSongs(action) {
   }
 }
 
+function* getAllAlbums(action) {
+  try {
+    const response = yield getAllAlbumsApi(action);
+    if (!response) {
+      yield put({
+        type: types.GET_ALL_ALBUMS_FAILURE,
+      });
+    } else {
+      yield put({
+        type: types.GET_ALL_ALBUMS_SUCCESS,
+        data: response,
+      });
+    }
+  } catch (error) {
+    yield put({
+      type: types.GET_ALL_ALBUMS_FAILURE,
+      error,
+    });
+  }
+}
+
 export default function* watchSaga() {
-  yield all([takeLatest(types.GET_ALL_SONGS_REQUEST, getAllSongs)]);
+  yield all([
+    takeLatest(types.GET_ALL_SONGS_REQUEST, getAllSongs),
+    takeLatest(types.GET_ALL_ALBUMS_REQUEST, getAllAlbums),
+  ]);
 }

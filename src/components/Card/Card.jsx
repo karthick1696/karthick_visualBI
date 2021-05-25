@@ -1,30 +1,69 @@
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import styles from "./Card.scss";
 
 export function Card({
     type = "",
+    children,
     ...rest
 }) {
-    switch (type) {
-        case "song":
-            const { song = {} } = rest;
+    const {
+        detail = {},
+        classes = {},
+        albums,
+        playlistConfig: {
+            forPlaylist,
+            onSelectAdd,
+            classes: playlistClasses
+        }
+    } = rest;
 
-            return (
-                <div className={styles.song}>
-                    <div className={styles.songDetails}>
+    const getDetailView = () => {
+        switch (type) {
+            case "song":
+                return (
+                    <>
                         <img
                             className={styles.thumbnail}
-                            src={song.thumbnailUrl}
+                            src={detail.thumbnailUrl}
                             alt="thumbnail" />
                         <div
-                            title={song.title}
+                            title={detail.title}
                             className={styles.title}>
-                            {song.title}
+                            <div>{detail.title}</div>
+                            <div>
+                                <strong>Album:</strong> {albums[detail.albumId]}
+                            </div>
                         </div>
-                    </div>
-                </div>
-            );
+                    </>
+                );
 
-        default:
-            return null;
+            default:
+                return (
+                    <>
+                        <div
+                            title={detail.title}
+                            className={styles.title}>
+                            {detail.title}
+                        </div>
+                        {children}
+                    </>
+                );
+        }
     }
+
+
+    return (
+        <div className={`
+            ${styles.card}
+            ${!forPlaylist ? classes.card : playlistClasses.card}
+        `}>
+            <div className={`${styles.cardDetails} ${classes.detail}`}>
+                {getDetailView()}
+            </div>
+            {forPlaylist ? (
+                <AddCircleOutlineIcon
+                    onClick={() => onSelectAdd(detail)} />
+             ) : null}
+        </div>
+    )
 }

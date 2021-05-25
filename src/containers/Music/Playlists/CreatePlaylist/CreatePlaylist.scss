@@ -1,0 +1,62 @@
+@import "src/styles/variables";
+
+svg {
+  cursor: pointer;
+}
+
+.titleBox {
+  input {
+    max-width: 15rem;
+    text-overflow: ellipsis;
+    outline: none;
+    border: 1px solid rgba($vb-black, 0.2);
+    background-color: transparent;
+    padding: 0.5rem;
+    &:disabled {
+      border-color: transparent;
+    }
+  }
+  svg {
+    visibility: hidden;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+    &.show {
+      visibility: visible;
+    }
+  }
+  &Wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 2rem;
+
+    & > * {
+      margin: 0.5rem;
+    }
+
+    .goBack {
+      border: 1px solid $vb-black;
+      border-radius: 50%;
+      font-size: 2rem;
+    }
+  }
+}
+
+.btnWrap {
+  text-align: right;
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  & > *:first-child {
+    width: 90%;
+  }
+}
+
+.container {
+  & > * {
+    margin-top: 1rem;
+  }
+}

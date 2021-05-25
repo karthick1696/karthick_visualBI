@@ -8,3 +8,10 @@ export const getAllSongsApi = () => {
 
   return RestClient.get(config);
 };
+
+export const getAllAlbumsApi = () => {
+  const config = { headers };
+  config.url = `${BASE_URL}${API.ALBUMS}`;
+
+  return RestClient.get(config);
+};

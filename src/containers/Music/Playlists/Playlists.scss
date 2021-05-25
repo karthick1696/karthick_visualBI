@@ -1,0 +1,26 @@
+.container {
+  position: relative;
+  height: calc(100% - 7rem);
+  overflow: auto;
+}
+
+.cardDetail {
+  justify-content: space-between;
+  .edit {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.btnWrap {
+  text-align: center;
+}
+
+.noData {
+  font-size: 1.4rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

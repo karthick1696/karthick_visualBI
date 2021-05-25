@@ -3,7 +3,7 @@ import * as types from "../actionTypes/songActionTypes";
 import { setItem } from "../common/utils";
 
 export default function songReducer(state = {}, action) {
-  const { type } = action;
+  const { type, payload } = action;
 
   switch (type) {
     case types.GET_ALL_SONGS_REQUEST:
@@ -17,6 +17,7 @@ export default function songReducer(state = {}, action) {
 
       return {
         ...state,
+        songs: action.data,
         loading: false,
       };
 
@@ -31,6 +32,42 @@ export default function songReducer(state = {}, action) {
       return {
         ...state,
         loading: false,
+      };
+
+    case types.GET_ALL_ALBUMS_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case types.GET_ALL_ALBUMS_SUCCESS:
+      return {
+        ...state,
+        albums: (action.data || []).reduce((acc, currVal) => {
+          acc[currVal.id] = currVal.title;
+
+          return acc;
+        }, {}),
+        loading: false,
+      };
+
+    case types.GET_ALL_ALBUMS_FAILURE:
+      toast.error("Albums Fetching Failed...", {
+        position: "top-right",
+        autoClose: 3000,
+        closeOnClick: true,
+        pauseOnHover: false,
+      });
+
+      return {
+        ...state,
+        loading: false,
+      };
+
+    case types.SET_SONGS:
+      return {
+        ...state,
+        songs: payload,
       };
 
     default:

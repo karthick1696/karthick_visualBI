@@ -3,9 +3,18 @@ import { bindActionCreators } from "redux";
 
 import { Playlists } from "./Playlists";
 import * as PlaylistActions from "../../../actions/playlistActions";
+import * as SongActions from "../../../actions/songActions";
 
-const mapDispatchToProps = (dispatch) => ({
-  actions: bindActionCreators(PlaylistActions, dispatch),
+const mapStateToProps = (state) => ({
+  songs: state.Song.songs || [],
+  playlist: state.Playlist.playlist || {
+    songs: [],
+    name: "",
+  },
 });
 
-export default connect(null, mapDispatchToProps)(Playlists);
+const mapDispatchToProps = (dispatch) => ({
+  actions: bindActionCreators({ ...PlaylistActions, ...SongActions }, dispatch),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Playlists);
