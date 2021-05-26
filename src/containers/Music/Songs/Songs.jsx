@@ -55,7 +55,7 @@ export function Songs(props) {
     }
 
     const onSearch = debounce(e => {
-        const value = e.target.value;
+        const value = e.target.value || '';
         const songList = getAppropriateSongList();
 
         if (!value) {
@@ -65,7 +65,10 @@ export function Songs(props) {
         }
 
         actions.setSongs(
-            songList.filter(song => song.title.indexOf(value) !== -1)
+            songList.filter(
+                (song) =>
+                    (song.title || "").toLowerCase().indexOf(value.toLowerCase()) !== -1
+            )
         );
     }, 200);
 
